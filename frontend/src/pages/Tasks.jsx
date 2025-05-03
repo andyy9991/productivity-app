@@ -13,7 +13,7 @@ const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('all'); // 'all', 'today', 'completed'
+  const [filter, setFilter] = useState('all'); // 'all', 'today', 'uncompleted'
   const [showAddForm, setShowAddForm] = useState(false);
   const [categories, setCategories] = useState(defaultCategories);
   const [newCategory, setNewCategory] = useState('');
@@ -160,8 +160,8 @@ const Tasks = () => {
     switch (filter) {
       case 'today':
         return tasks.filter(task => task.to_be_done_today);
-      case 'completed':
-        return tasks.filter(task => task.done);
+      case 'uncompleted':
+        return tasks.filter(task => !task.done);
       default:
         return tasks;
     }
@@ -237,14 +237,14 @@ const Tasks = () => {
               Today
             </button>
             <button
-              onClick={() => setFilter('completed')}
+              onClick={() => setFilter('uncompleted')}
               className={`px-4 py-2 rounded-lg ${
-                filter === 'completed' 
+                filter === 'uncompleted' 
                   ? 'bg-blue-500 text-white' 
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              Completed
+              Uncompleted
             </button>
           </div>
           <button
@@ -455,8 +455,8 @@ const Tasks = () => {
           <p className="text-gray-500 mt-2">
             {filter === 'today' 
               ? "You don't have any tasks scheduled for today." 
-              : filter === 'completed' 
-                ? "You haven't completed any tasks yet."
+              : filter === 'uncompleted' 
+                ? "You don't have any uncompleted tasks. Great job!"
                 : "You don't have any tasks. Create one to get started!"}
           </p>
         </div>

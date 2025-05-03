@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app import db
-from app.models import Task, User
-from datetime import datetime, timezone
+from app.models import Task
 
 tasks_bp = Blueprint('tasks', __name__)
 
@@ -44,8 +43,8 @@ def get_all_tasks():
             'category': task.category,
             'difficulty': task.difficulty,
             'motivation_resistance': task.motivation_resistance,
-            'time': task.time.isoformat() if task.time else None,
-            'done': task.done,
+            'time': task.time,
+            'done': task.done, 
             'to_be_done_today': task.to_be_done_today,
             'user_id': task.user_id
         })
@@ -79,7 +78,7 @@ def create_task():
         category=data.get('category'),
         difficulty=data.get('difficulty'),
         motivation_resistance=data.get('motivation_resistance'),
-        time=datetime.fromisoformat(data.get('time')) if data.get('time') else datetime.utcnow(),
+        time=data.get('time'),
         done=data.get('done', False),
         to_be_done_today=data.get('to_be_done_today', False),
         user_id=data.get('user_id')
@@ -98,7 +97,7 @@ def create_task():
             'category': new_task.category,
             'difficulty': new_task.difficulty,
             'motivation_resistance': new_task.motivation_resistance,
-            'time': new_task.time.isoformat() if new_task.time else None,
+            'time': new_task.time,
             'done': new_task.done,
             'to_be_done_today': new_task.to_be_done_today,
             'user_id': new_task.user_id
@@ -133,8 +132,8 @@ def update_task(task_id):
         task.difficulty = data['difficulty']
     if 'motivation_resistance' in data:
         task.motivation_resistance = data['motivation_resistance']
-    if 'time' in data and data['time']:
-        task.time = datetime.fromisoformat(data['time'])
+    if 'time' in data:
+        task.time = data['time']
     if 'done' in data:
         task.done = data['done']
     if 'to_be_done_today' in data:
@@ -152,7 +151,7 @@ def update_task(task_id):
             'category': task.category,
             'difficulty': task.difficulty,
             'motivation_resistance': task.motivation_resistance,
-            'time': task.time.isoformat() if task.time else None,
+            'time': task.time,
             'done': task.done,
             'to_be_done_today': task.to_be_done_today,
             'user_id': task.user_id

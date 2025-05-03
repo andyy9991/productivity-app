@@ -29,7 +29,7 @@ class Task(db.Model):
     category = db.Column(db.String(100), nullable=True)
     difficulty = db.Column(db.String(50), nullable=False)
     motivation_resistance = db.Column(db.String(50), nullable=False)
-    time = db.Column(db.DateTime, default=datetime.utcnow)
+    time = db.Column(db.String(20), nullable=True)
     done = db.Column(db.Boolean, default=False)
     to_be_done_today = db.Column(db.Boolean, default=False)
     
