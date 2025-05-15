@@ -15,12 +15,14 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": "*"}})
     db.init_app(app)
 
-    from .routes.tasks import tasks_bp
-    from .routes.rewards import rewards_bp
-    from .routes.reflections import reflections_bp
+    from .routes.api_tasks import tasks_bp
+    from .routes.api_rewards import rewards_bp
+    from .routes.api_reflections import reflections_bp
+    from .routes.api_users import users_bp
     app.register_blueprint(tasks_bp, url_prefix='/api') 
     app.register_blueprint(rewards_bp, url_prefix='/api') 
     app.register_blueprint(reflections_bp, url_prefix='/api') 
+    app.register_blueprint(users_bp, url_prefix='/api')
 
 
     with app.app_context():

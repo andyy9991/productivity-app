@@ -9,6 +9,7 @@ class User(db.Model):
     xp = db.Column(db.Integer, default=0)
     level = db.Column(db.Integer, default=1)
     coins = db.Column(db.Integer, default=0)
+    can_use_time_blocks = db.Column(db.Boolean, default=False)
 
     # Relationships
     tasks = db.relationship("Task", back_populates="user")
